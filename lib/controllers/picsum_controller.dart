@@ -9,7 +9,7 @@ class PicsumController extends ChangeNotifier {
   int currentIndex = 0;
 
   int currentPage = 1;
-  int totalAvailablePage = 1;
+  int totalAvailablePage = 6;
 
   bool isLoading = true;
 
@@ -35,24 +35,4 @@ class PicsumController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadingImg(String imgId) async {
-    ApiResponse result = await PicsumApi.instance.getPicsumImage(imgId);
-
-    if (result.error) {
-      isError = result.error;
-      errorMessage = result.message;
-    }
-
-    if (!result.error) {
-      picsumModel = result.picsumImg!;
-    }
-
-    isLoading = false;
-    notifyListeners();
-  }
-
-  void navbarIndex(int index) {
-    currentIndex = index;
-    notifyListeners();
-  }
 }

@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollController.position.maxScrollExtent) {
         if (_controller.currentPage <= _controller.totalAvailablePage) {
           _controller.currentPage += 1;
-          _controller.totalAvailablePage += 1;
           _controller.loadingData();
         }
       }

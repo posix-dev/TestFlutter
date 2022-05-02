@@ -33,28 +33,4 @@ class PicsumApi {
       return ApiResponse(error: true, message: 'Exception $e');
     }
   }
-
-  Future<ApiResponse> getPicsumImage(String id) async {
-    try {
-      http.Response response = await http.get(
-        Uri.parse(
-          RestApi.picsumImageApi(id),
-        ),
-      );
-
-      if (response.statusCode == 200) {
-        return ApiResponse(
-          error: false,
-          message: 'Loading Done',
-          picsumImg: picsumFromJson(response.body),
-        );
-      } else {
-        return ApiResponse(error: true, message: 'Unknown Exception');
-      }
-    } on SocketException catch (e) {
-      return ApiResponse(error: true, message: 'Socket Exception ${e.message}');
-    } catch (e) {
-      return ApiResponse(error: true, message: 'Exception $e');
-    }
-  }
 }
