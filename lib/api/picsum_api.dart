@@ -6,9 +6,10 @@ import 'package:test_project_flutter/models/picsum_model.dart';
 import 'package:test_project_flutter/api/api_helper.dart';
 
 class PicsumApi {
-  PicsumApi._();
 
-  static PicsumApi get instance => PicsumApi._();
+  PicsumApi._privateConstructor();
+
+  static final PicsumApi instance = PicsumApi._privateConstructor();
 
   Future<ApiResponse> getPicsumList(int page) async {
     try {
