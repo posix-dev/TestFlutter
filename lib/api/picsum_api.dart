@@ -12,6 +12,8 @@ class PicsumApi {
   static final PicsumApi instance = PicsumApi._privateConstructor();
 
   Future<ApiResponse> getPicsumList(int page) async {
+    // await Future.delayed(const Duration(seconds: 2));
+
     try {
       http.Response response = await http.get(
         Uri.parse(

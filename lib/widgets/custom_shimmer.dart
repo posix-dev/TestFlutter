@@ -23,15 +23,7 @@ class CustomShimmer extends StatelessWidget {
           (index % 7 == 0) ? 2 : 1,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                flex: 4,
-                child: Container(color: Colors.white),
-              ),
-            ],
-          );
+          return const ColoredBox(color: Colors.white);
         },
       ),
     );

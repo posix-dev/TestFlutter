@@ -13,62 +13,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ScrollController scrollController = ScrollController();
-
-  late PicsumController _controller;
-
-  @override
-  void initState() {
-    _controller = Provider.of<PicsumController>(context, listen: false);
-
-    scrollListener();
-
-    if (_controller.currentPage == 1) {
-      _controller.loadingData();
-    }
-    super.initState();
-  }
-
-  void scrollListener() {
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        if (_controller.currentPage <= _controller.totalAvailablePage) {
-          _controller.currentPage += 1;
-          _controller.loadingData();
-        }
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Consumer<PicsumController>(builder: (context, data, _) {
-      return Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.only(top: 24.0),
-            child: data.isLoading
+  final PicsumController _controller = context.read<PicsumController>();
+
+    return Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.only(top: 24.0),
+          child: Consumer<PicsumController>(builder: (context, data, _) {
+            return data.isLoading
                 ? const CustomShimmer()
                 : data.isError
                     ? ErrorView(
                         message: data.errorMessage,
                         onPressed: () {
-                          _controller.loadingData();
+                          _controller.loadData();
                         },
                       )
                     : RefreshIndicator(
-                        child: CustomStaggeredGridView(
-                          controller: scrollController,
-                          picsumList: data.picsumModelList,
-                          picsumController: _controller,
-                        ),
+                        child: const CustomStaggeredGridView(),
                         onRefresh: () async {
-                          _controller.loadingData();
+                          _controller.loadData();
                         },
-                      ),
-          ),
-          bottomNavigationBar: const BottomNavWidget());
-    });
+                      );
+          }),
+        ),
+        bottomNavigationBar: const BottomNavWidget());
   }
 }
 

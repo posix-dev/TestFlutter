@@ -6,33 +6,33 @@ import 'package:test_project_flutter/models/api_response.dart';
 import 'package:test_project_flutter/models/picsum_model.dart';
 
 class PicsumController extends ChangeNotifier {
+  final controller = ScrollController();
+
   int currentIndex = 0;
 
-  int currentPage = 1;
   int totalAvailablePage = 6;
 
-  bool isLoading = true;
+  bool isLoading = false;
 
   bool isError = false;
   String errorMessage = '';
 
-  List<Picsum> picsumModelList = [];
   String picsumModel = "";
 
-  Future<void> loadingData() async {
-    ApiResponse result = await PicsumApi.instance.getPicsumList(currentPage);
+  Future<List<Picsum>?> loadData({int page = 1}) async {
+    ApiResponse result = await PicsumApi.instance.getPicsumList(page);
+
+    isLoading = false;
 
     if (result.error) {
       isError = result.error;
       errorMessage = result.message;
+      notifyListeners();
     }
 
     if (!result.error) {
-      picsumModelList.addAll(result.picsumList!);
+      notifyListeners();
+      return result.picsumList;
     }
-
-    isLoading = false;
-    notifyListeners();
   }
-
 }
